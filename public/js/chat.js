@@ -24,8 +24,10 @@ const chat = {
 		socket.emit('chat', data);
 	},
 	scrollBottom : function(){
-		$contents = $(".chat .contents");
-		$contenst.scrollTo($contents.innerHeight());
+		const $li =$(".chat .contents li ");
+		const h =$li.innerHeight();
+		const st = h * $li.length;
+		$(".chat .contents").scrollTop(st);
 	},
 }
 
