@@ -23,12 +23,17 @@ const chat = {
 		};
 		socket.emit('chat', data);
 	}
+	scrollBottom : function(){
+		$contents = $(".chat .contents").innerHeight();
+	};
 }
 
 socket.on('chat', (data) =>{
 	let html = $("#chat_template").html();
 	html = html.replace(/<%=message%>/g, data.message);
 	$(".chat .contents").append(html);
+	
+	chat.scrollBottom();
 });
 
 $(function() {
