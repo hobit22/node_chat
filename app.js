@@ -8,12 +8,20 @@ const server = require("http").createServer(app); //http 는 내장모듈
 const io = require('socket.io')( server );
 
 io.on("connection", (socket) => {
-	// socket.on -> 데이터 수신 
+	
+	// socket.on -> 데이터 수신 socket.emit 데이터 전송
 	socket.on('chat', (arg) => {
 		console.log("전송받은 데이터", arg);
 		//socket.emit('chat', arg);
 		io.emit('chat', arg);
 	});
+	
+	// 채팅방 참여
+	socket.on('join', (room)=>{
+		console.log(room+"에 참여");
+		socket.join(room);
+	});
+	
 });
 
 app.set('port', process.env.PORT || 3000);
@@ -30,6 +38,9 @@ app.get('/', (req,res,next)=>{
 	res.render('main');
 });
 app.get('/chat', (req,res,next) =>{
+	if(!req.query.room || !req.query.userNm) {
+		return res.send("<script>alert('방이름, 사용자명 누락');location.href='/';</script>");
+	}
 	return res.render("chat");
 });
 
