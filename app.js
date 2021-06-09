@@ -13,13 +13,23 @@ io.on("connection", (socket) => {
 	socket.on('chat', (arg) => {
 		console.log("전송받은 데이터", arg);
 		//socket.emit('chat', arg);
-		io.emit('chat', arg);
+		io.to(arg.room).emit('chat', arg);
 	});
 	
 	// 채팅방 참여
 	socket.on('join', (room)=>{
 		console.log(room+"에 참여");
 		socket.join(room);
+	});	
+	
+	// 방을 닫을 때
+	socket.on('disconnecting', ()=>{
+		console.log('disconneting');
+	});
+	
+	// 방이 닫혔을 때
+	socket.on('disconnet', ()=>{
+		console.log('disconnet');
 	});
 	
 });
