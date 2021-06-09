@@ -22,19 +22,12 @@ const chat = {
 			message : message,
 		};
 		socket.emit('chat', data);
-	}
+	},
 	scrollBottom : function(){
-		$contents = $(".chat .contents").innerHeight();
-	};
+		$contents = $(".chat .contents");
+		$contenst.scrollTo($contents.innerHeight());
+	},
 }
-
-socket.on('chat', (data) =>{
-	let html = $("#chat_template").html();
-	html = html.replace(/<%=message%>/g, data.message);
-	$(".chat .contents").append(html);
-	
-	chat.scrollBottom();
-});
 
 $(function() {
 	$(".chat #word").keyup(function(e) {
@@ -42,7 +35,16 @@ $(function() {
 			const message =$(this).val().trim();
 			if(message){
 				chat.send(message);
+				$(this).val();
 			}
 		}
+	});
+	
+	socket.on('chat', (data) =>{
+		let html = $("#chat_template").html();
+		html = html.replace(/<%=message%>/g, data.message);
+		$(".chat .contents").append(html);
+		
+		chat.scrollBottom();
 	});
 });
