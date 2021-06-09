@@ -26,8 +26,10 @@ nunjucks.configure('views', {
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.get('/', (req,res,next) =>{
+app.get('/', (req,res,next)=>{
+	res.render('main');
+});
+app.get('/chat', (req,res,next) =>{
 	return res.render("chat");
 });
 
