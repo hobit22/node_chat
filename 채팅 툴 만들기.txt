@@ -1,0 +1,4 @@
+채팅 툴 만들기
+
+npm i socket.io express nunjucks morgan
+npm i -D nodemon
